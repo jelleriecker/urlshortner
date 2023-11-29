@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}URL shortener{% endblock %}
+
+{% block content %}
+<h1>URL shortener</h1>
+<form action="/#" method="POST">
+    <input type="text" name="url" placeholder="Enter URL here . . ." id="input-field" required/>
+    <input type="text" name="shortcode" placeholder="Enter shortcode here . . ." id="input-field" required/>
+    <button id="shorten" type="submit" class="content-row button">Shorten URL</button>
+    <button type="button" id="clear-btn" class="content-row button">Clear</button>
+</form>
+{% endblock %}
