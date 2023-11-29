@@ -1,34 +1,37 @@
+import random, short_url, string
 from flask import Flask, render_template, request, redirect
-import short_url
-import string
 
 
 
+#variables
 app = Flask(__name__)
 shortened_urls = {}
-root_url = "short.url/"
+shorty_prefix = "http://short.url/"
+url_store = {}
 
-
-def generate_short_url(length=8):
-    chars = string.ascii_letters + string.digits
-    short_url = "".join(random.choice(chars) for _ in range(length))
-    return short_url.encode_url(l)
+def shorten_url(url):
+    if url in url_store:
+        return url_store[url]
+    else:
+        short_url = shorty_prefix + ''.join(random.choice(string.ascii_letters) for i in range(5))
+        url_store[url] = short_url
+        return short_url
+   
 
 @app.route('/', methods=['GET', 'POST'])
 def shortener():
     if request.method == 'POST':
-        long_url = request.form['url']
-        short_url = generate_short_url(long_url)
-        shortcode = request.form['shortcode']
-        while short_url in short_url:
-            short_url = generate_short_url(long_url)
-        return f"shortened URL: {request.root_url}{short_url}{shortcode}"
+        url = request.form.get('url')
+        short_url = shorten_url(url)
+        shortened_urls[short_url] = url
+        return render_template('shortened-url.html', short_url=short_url)
     return render_template('shortener.html')
 
-@app.route('/short_url')
-def short_url():
-    return render_template('shortened-url.html')
 
+@app.route('/<short_url>')
+def short_url():
+    
+    return render_template('shortened-url.html')
 
 
 
