@@ -5,35 +5,35 @@ from flask import Flask, render_template, request, redirect
 
 #variables
 app = Flask(__name__)
-shortened_urls = {}
-shorty_prefix = "http://short.url/"
-url_store = {}
+short_prefix = "www.short.url/"
+long_urls = {}
+short_urls = {}
 
+def store_url(url):
+    return print(long_urls, short_urls)
+
+#below is the function that will shorten the url given by the user
 def shorten_url(url):
-    if url in url_store:
-        return url_store[url]
+    if url in long_urls and shortcode in shortcode:
+        return short_urls[url]
     else:
-        short_url = shorty_prefix + ''.join(random.choice(string.ascii_letters) for i in range(5))
-        url_store[url] = short_url
-        return short_url
+        shortcode = request.form.get('shortcode')
+        short_url = short_prefix + shortcode
+        short_urls[url] = short_url + shortcode
+        for lurl in long_urls:
+            long_urls + shortcode
+            
+        return short_url 
    
-
+#below is the function that will handle the request from the user
 @app.route('/', methods=['GET', 'POST'])
 def shortener():
     if request.method == 'POST':
         url = request.form.get('url')
         short_url = shorten_url(url)
-        shortened_urls[short_url] = url
+        short_urls[short_url] = url
         return render_template('shortened-url.html', short_url=short_url)
     return render_template('shortener.html')
 
-
-@app.route('/<short_url>')
-def short_url():
-    
-    return render_template('shortened-url.html')
-
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=9999)
