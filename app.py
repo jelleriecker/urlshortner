@@ -8,13 +8,22 @@ app = Flask(__name__)
 short_prefix = "www.short.url/"
 long_urls = {}
 short_urls = {}
+url_store = {}
+
+#error codes TODO: implement these errorcodes in process
+error400 - "Url not present"
+error404 - "Shortcode not found"
+error409 - "Shortcode already in use"
+error412 = "The provided shortcode is invalid"
+
 
 def store_url(url):
     return print(long_urls, short_urls)
 
+#TODO: add longurl as a key and shortcode as a value to url_store Dictionary.
 #below is the function that will shorten the url given by the user
 def shorten_url(url):
-    if url in long_urls and shortcode in shortcode:
+    if url in long_urls and shortcode in shortcode: 
         return short_urls[url]
     else:
         shortcode = request.form.get('shortcode')
@@ -34,6 +43,11 @@ def shortener():
         short_urls[short_url] = url
         return render_template('shortened-url.html', short_url=short_url)
     return render_template('shortener.html')
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=9999)
